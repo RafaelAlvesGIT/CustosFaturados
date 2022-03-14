@@ -1,0 +1,78 @@
+﻿@model CustosFaturados.Models.Fornecedor;
+
+<form action="~/Fornecedor/Index" method="post">
+    <button type="submit" class="btn btn-default"><i class="fas fa-reply"></i></button>
+</form>
+<fieldset class="bordaFieldSet">
+    <legend class="legend">Edição</legend>
+    <form action="~/Fornecedor/Editar" method="post">
+        <div class="form-row">
+            <input type="hidden" name="Id" value="@Model.Id" />
+            <div class="form-group col-md-3">
+                <label for="Nome">Nome</label>
+                <input type="text" class="form-control" id="Nome" name="Nome" placeholder="Nome" value="@Model.Nome">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="Vertical">Vertical</label>
+                <select id="Vertical" name="Vertical.Id" class="form-control">
+                    @if (ViewBag.ListaVertical != null)
+                    {
+                        @foreach (Vertical vertical in ViewBag.ListaVertical)
+                        {
+                            if (vertical.Id == Model.Vertical.Id)
+                            {
+                                <option selected value="@vertical.Id">@vertical.Descricao</option>
+                            }
+                            else
+                            {
+                                <option value="@vertical.Id">@vertical.Descricao</option>
+                            }
+
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="Link">Link</label>
+                <input type="text" class="form-control" id="Link" name="Link" value="@Model.Link" placeholder="Link">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label>Fornecedor mantem histórico?</label>
+                <br />
+                @if (Model.Historico)
+                {
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" checked type="radio" name="Historico" id="Historico" value="true">
+                        <label class="form-check-label" for="Historico">Sim</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="Historico" id="Historico" value="false">
+                        <label class="form-check-label" for="Historico">Não</label>
+                    </div>
+                }
+                else
+                {
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="Historico" id="Historico" value="true">
+                        <label class="form-check-label" for="Historico">Sim</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" checked type="radio" name="Historico" id="Historico" value="false">
+                        <label class="form-check-label" for="Historico">Não</label>
+                    </div>
+                }
+            </div>
+        </div>
+        <div align="right">
+            <span class="btn btn-default btn-outline-danger">@Html.ActionLink("Cancelar", "Index", "Fornecedor")</span>
+            <button type="submit" class="btn btn-default btn-outline-success">Editar</button>
+        </div>
+    </form>
+</fieldset>
+<link rel="stylesheet" type="text/css" href="~/css/MensagemValidacao.css">

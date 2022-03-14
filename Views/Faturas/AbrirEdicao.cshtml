@@ -1,0 +1,57 @@
+﻿@model CustosFaturados.Models.Fatura;
+
+<form action="~/Faturas/Index" method="post">
+    <button type="submit" class="btn btn-default"><i class="fas fa-reply"></i></button>
+</form>
+<fieldset class="bordaFieldSet">
+    <legend class="legend">Edição</legend>
+    <form action="~/Faturas/Editar" method="post">
+        <div class="form-row">
+            <input type="hidden" name="Id" value="@Model.Id" />
+            <div class="form-group col-md-3">
+                <label for="Descricao">Descrição</label>
+                <input type="text" class="form-control" value="@Model.Descricao" id="Descricao" name="Descricao" placeholder="Descrição">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="Fornecedor">Fornecedor</label>
+                <select id="Fornecedor" name="Fornecedor.Id" class="form-control">
+                    @if (ViewBag.ListaFornecedor != null)
+                    {
+                        @foreach (Fornecedor fornecedor in ViewBag.ListaFornecedor)
+                        {
+                            if (Model.Fornecedor != null)
+                            {
+                                if (fornecedor.Id == Model.Fornecedor.Id)
+                                {
+                                    <option selected value="@fornecedor.Id">@fornecedor.Nome</option>
+                                }
+                                else
+                                {
+                                    <option value="@fornecedor.Id">@fornecedor.Nome</option>
+                                }
+                            }
+                            else
+                            {
+                                <option value="@fornecedor.Id">@fornecedor.Nome</option>
+                            }
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="Valor">Valor</label>
+                <input type="text" class="form-control" value="@Model.Valor" id="Valor" onKeyPress="return(moeda(this,'.',',',event))"  name="Valor" placeholder="Valor">
+            </div>
+        </div>
+        <div align="right">
+            <span class="btn btn-default btn-outline-danger">@Html.ActionLink("Cancelar", "Index", "Faturas")</span>
+            <button type="submit" class="btn btn-default btn-outline-success">Editar</button>
+        </div>
+    </form>
+</fieldset>
+<link rel="stylesheet" type="text/css" href="~/css/MensagemValidacao.css">
+<script type="text/javascript" src="~/js/Util.js"></script>
